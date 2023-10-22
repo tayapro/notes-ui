@@ -37,6 +37,16 @@ async function onSignUpSubmit(username, password) {
         <button @click="showSignUp = true">Sign up</button>
     </div>
 
+    <div>
+        <h3>Notes</h3>
+        <div v-for="n in store.notes" :key="n.id">
+            <div>{{ n.author }}</div>
+            <div>{{ n.title }}</div>
+            <div>{{ n.text }}</div>
+            <hr />
+        </div>
+    </div>
+
     <LoginModal
         greeting="Sign In"
         :visible="showSignIn"

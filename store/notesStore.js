@@ -4,6 +4,7 @@ import axios from 'axios'
 
 export const useStore = defineStore('notes', () => {
     const username = ref('')
+    const notes = ref([])
 
     function isLoggedIn() {
         return username.value !== ''
@@ -11,9 +12,11 @@ export const useStore = defineStore('notes', () => {
 
     function logout() {
         username.value = ''
+        notes.value = []
     }
 
     async function signIn(uname, password) {
+        notes.value = []
         const res = await axios.post(
             'http://localhost:3001/api/login',
             {
@@ -29,9 +32,11 @@ export const useStore = defineStore('notes', () => {
 
         username.value = res.data.username
         console.log(res)
+        await getAllNotes()
     }
 
     async function signUp(uname, password) {
+        notes.value = []
         const res = await axios.post(
             'http://localhost:3001/api/register',
             {
@@ -47,7 +52,17 @@ export const useStore = defineStore('notes', () => {
 
         username.value = res.data.username
         console.log(res)
+        await getAllNotes()
     }
 
-    return { username, isLoggedIn, logout, signIn, signUp }
+    async function getAllNotes() {
+        const res = await axios.get('http://localhost:3000/notes')
+
+        for (let n of res.data) {
+            notes.value.push(n)
+        }
+        console.log(notes.value[0])
+    }
+
+    return { username, notes, isLoggedIn, logout, signIn, signUp }
 })
