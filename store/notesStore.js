@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
+import axios from 'axios'
 
 export const useStore = defineStore('notes', () => {
     const username = ref('')
@@ -12,12 +13,40 @@ export const useStore = defineStore('notes', () => {
         username.value = ''
     }
 
-    function signIn(uname, password) {
-        username.value = uname
+    async function signIn(uname, password) {
+        const res = await axios.post(
+            'http://localhost:3001/api/login',
+            {
+                username: uname,
+                password,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+
+        username.value = res.data.username
+        console.log(res)
     }
 
-    function signUp(uname, password) {
-        username.value = uname
+    async function signUp(uname, password) {
+        const res = await axios.post(
+            'http://localhost:3001/api/register',
+            {
+                username: uname,
+                password,
+            },
+            {
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            }
+        )
+
+        username.value = res.data.username
+        console.log(res)
     }
 
     return { username, isLoggedIn, logout, signIn, signUp }

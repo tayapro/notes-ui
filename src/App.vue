@@ -7,20 +7,20 @@ const store = useStore()
 const showSignIn = ref(false)
 const showSignUp = ref(false)
 
-function onSignInSubmit(username, password) {
+async function onSignInSubmit(username, password) {
     console.log(username, password)
     try {
-        store.signIn(username, password)
+        await store.signIn(username, password)
     } catch (e) {
         console.error(`ERROR: ${e}`)
     }
     showSignIn.value = false
 }
 
-function onSignUpSubmit(username, password) {
+async function onSignUpSubmit(username, password) {
     console.log(username, password)
     try {
-        store.signUp(username, password)
+        await store.signUp(username, password)
     } catch (e) {
         console.error(`ERROR: ${e}`)
     }
