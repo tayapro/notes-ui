@@ -12,12 +12,12 @@ export const useStore = defineStore('notes', () => {
         username.value = ''
     }
 
-    function signIn() {
-        username.value = 'bro'
+    function signIn(uname, password) {
+        username.value = uname
     }
 
-    function signUp() {
-        username.value = 'bro2'
+    function signUp(uname, password) {
+        username.value = uname
     }
 
     return { username, isLoggedIn, logout, signIn, signUp }
