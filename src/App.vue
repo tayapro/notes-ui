@@ -40,7 +40,6 @@ async function onSignUpSubmit(username, password) {
     <div>
         <h3>Notes</h3>
         <div v-for="n in store.notes" :key="n.id">
-            <div>{{ n.author }}</div>
             <div>{{ n.title }}</div>
             <div>{{ n.text }}</div>
             <hr />

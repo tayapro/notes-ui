@@ -5,6 +5,7 @@ import axios from 'axios'
 export const useStore = defineStore('notes', () => {
     const username = ref('')
     const notes = ref([])
+    let accessToken = ''
 
     function isLoggedIn() {
         return username.value !== ''
@@ -31,7 +32,8 @@ export const useStore = defineStore('notes', () => {
         )
 
         username.value = res.data.username
-        console.log(res)
+        accessToken = res.data.accessToken
+        // console.log(res)
         await getAllNotes()
     }
 
@@ -51,12 +53,17 @@ export const useStore = defineStore('notes', () => {
         )
 
         username.value = res.data.username
-        console.log(res)
+        accessToken = res.data.accessToken
+        // console.log(res)
         await getAllNotes()
     }
 
     async function getAllNotes() {
-        const res = await axios.get('http://localhost:3000/notes')
+        const res = await axios.get('http://localhost:3000/notes', {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
 
         for (let n of res.data) {
             notes.value.push(n)
