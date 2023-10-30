@@ -33,7 +33,6 @@ export const useStore = defineStore('notes', () => {
 
         username.value = res.data.username
         accessToken = res.data.accessToken
-        // console.log(res)
         await getAllNotes()
     }
 
@@ -54,7 +53,6 @@ export const useStore = defineStore('notes', () => {
 
         username.value = res.data.username
         accessToken = res.data.accessToken
-        // console.log(res)
         await getAllNotes()
     }
 
@@ -68,8 +66,43 @@ export const useStore = defineStore('notes', () => {
         for (let n of res.data) {
             notes.value.push(n)
         }
-        console.log(notes.value[0])
     }
 
-    return { username, notes, isLoggedIn, logout, signIn, signUp }
+    async function addNote(title, text, tags) {
+        const res = await axios.post(
+            'http://localhost:3000/notes',
+            {
+                title,
+                text,
+                tags,
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        )
+        const newNote = { id: res.data, title, text, tags }
+        notes.value.push(newNote)
+    }
+
+    async function deleteNote(id) {
+        const res = await axios.delete(`http://localhost:3000/notes/${id}`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`,
+            },
+        })
+        notes.value = notes.value.filter((data) => data.id !== id)
+    }
+
+    return {
+        username,
+        notes,
+        isLoggedIn,
+        logout,
+        signIn,
+        signUp,
+        addNote,
+        deleteNote,
+    }
 })
