@@ -2,9 +2,11 @@
 import { useStore } from '../store/notesStore'
 import LoginModal from './components/LoginModal.vue'
 import NewNoteModal from './components/NewNoteModal.vue'
+import HighlightText from './components/HighlightText.vue'
 import { ref } from 'vue'
 
 const store = useStore()
+let filter = ref('')
 const showSignIn = ref(false)
 const showSignUp = ref(false)
 const showNewNote = ref(false)
@@ -46,12 +48,32 @@ async function deleteNote(id) {
         console.error(`ERROR: ${e}`)
     }
 }
+
+function getFilteredNotes() {
+    let filteredNotes = []
+    // TODO: why store.notes but not store.notes.value
+    for (let note of store.notes) {
+        if (
+            note.title.includes(filter.value) ||
+            note.text.includes(filter.value)
+        )
+            filteredNotes.push(note)
+    }
+    return filteredNotes
+}
 </script>
 
 <template>
     <div v-if="store.isLoggedIn()">
-        <button @click="store.logout()">logout ::: {{ store.username }}</button>
-        <button @click="showNewNote = true">New Note</button>
+        <div>
+            <button @click="store.logout()">
+                logout ::: {{ store.username }}
+            </button>
+            <button @click="showNewNote = true">New Note</button>
+        </div>
+        <div class="search">
+            <input placeholder="Search" v-model="filter" />
+        </div>
     </div>
     <div v-else>
         <button @click="showSignIn = true">Sign in</button>
@@ -60,10 +82,10 @@ async function deleteNote(id) {
 
     <div>
         <h3>Notes</h3>
-        <div v-for="n in store.notes" :key="n.id">
-            <div>{{ n.title }}</div>
-            <div>{{ n.text }}</div>
-            <button @click="deleteNote(n.id)">delete note</button>
+        <div v-for="(item, index) in getFilteredNotes()" :key="index">
+            <HighlightText :prop_text="item.title" :prop_match="filter" />
+            <HighlightText :prop_text="item.text" :prop_match="filter" />
+            <button @click="deleteNote(item.id)">delete note</button>
             <hr />
         </div>
     </div>
