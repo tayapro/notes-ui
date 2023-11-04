@@ -1,5 +1,5 @@
 <script setup>
-import { useStore } from '../store/notesStore'
+import { useStore } from './store/notesStore'
 import LoginModal from './components/LoginModal.vue'
 import NewNoteModal from './components/NewNoteModal.vue'
 import Note from './components/Note.vue'

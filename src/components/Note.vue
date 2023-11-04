@@ -1,7 +1,7 @@
 <script setup>
 import { ref } from 'vue'
 import HighlightText from './HighlightText.vue'
-import { useStore } from '../../store/notesStore'
+import { useStore } from '../store/notesStore'
 
 const props = defineProps(['note', 'filter'])
 
