@@ -87,12 +87,24 @@ export const useStore = defineStore('notes', () => {
     }
 
     async function deleteNote(id) {
-        const res = await axios.delete(`http://localhost:3000/notes/${id}`, {
+        await axios.delete(`http://localhost:3000/notes/${id}`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`,
             },
         })
         notes.value = notes.value.filter((data) => data.id !== id)
+    }
+
+    async function updateNote(id, title, text) {
+        await axios.put(
+            `http://localhost:3000/notes/${id}`,
+            { title, text },
+            {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`,
+                },
+            }
+        )
     }
 
     return {
@@ -104,5 +116,6 @@ export const useStore = defineStore('notes', () => {
         signUp,
         addNote,
         deleteNote,
+        updateNote,
     }
 })
