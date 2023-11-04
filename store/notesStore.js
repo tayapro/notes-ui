@@ -105,6 +105,18 @@ export const useStore = defineStore('notes', () => {
                 },
             }
         )
+        let n = getNoteByID(id)
+        n.title = title
+        n.text = text
+    }
+
+    function getNoteByID(id) {
+        for (let n of notes.value) {
+            if (n.id === id) {
+                return n
+            }
+        }
+        return undefined
     }
 
     return {
@@ -114,6 +126,7 @@ export const useStore = defineStore('notes', () => {
         logout,
         signIn,
         signUp,
+        getAllNotes,
         addNote,
         deleteNote,
         updateNote,

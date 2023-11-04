@@ -2,7 +2,7 @@
 import { useStore } from '../store/notesStore'
 import LoginModal from './components/LoginModal.vue'
 import NewNoteModal from './components/NewNoteModal.vue'
-import HighlightText from './components/HighlightText.vue'
+import Note from './components/Note.vue'
 import { ref } from 'vue'
 
 const store = useStore()
@@ -10,7 +10,6 @@ let filter = ref('')
 const showSignIn = ref(false)
 const showSignUp = ref(false)
 const showNewNote = ref(false)
-const editMode = ref(false)
 
 async function onSignInSubmit(username, password) {
     console.log(username, password)
@@ -42,31 +41,6 @@ async function onAddNote(title, text, tags) {
     showNewNote.value = false
 }
 
-async function deleteNote(id) {
-    try {
-        await store.deleteNote(id)
-    } catch (e) {
-        console.error(`ERROR: ${e}`)
-    }
-}
-
-async function saveNote(id, title, text) {
-    try {
-        console.log('title = ', title)
-        console.log('text = ', text)
-        console.log(id)
-        await store.updateNote(id, title, text)
-        editMode.value = false
-    } catch (e) {
-        console.error(`ERROR: ${e}`)
-    }
-}
-
-function cancelEdit(id, title) {
-    console.log('id = ', id)
-    editMode.value = false
-}
-
 function getFilteredNotes() {
     let filteredNotes = []
     // TODO: why store.notes but not store.notes.value
@@ -79,6 +53,11 @@ function getFilteredNotes() {
     }
     return filteredNotes
 }
+
+async function reReadNotes() {
+    store.notes = []
+    await store.getAllNotes()
+}
 </script>
 
 <template>
@@ -88,6 +67,7 @@ function getFilteredNotes() {
                 logout ::: {{ store.username }}
             </button>
             <button @click="showNewNote = true">New Note</button>
+            <button @click="reReadNotes()">Re-read notes</button>
         </div>
         <div class="search">
             <input placeholder="Search" v-model="filter" />
@@ -100,23 +80,8 @@ function getFilteredNotes() {
 
     <div>
         <h3>Notes</h3>
-        <!-- <input value="uuuu" /> -->
-        <div v-for="(item, index) in getFilteredNotes()" :key="index">
-            <p>{{ item.id }}</p>
-            <div v-if="editMode">
-                <div><input v-model="item.title" /></div>
-                <div><textarea rows="10" v-model="item.text" /></div>
-                <button @click="saveNote(item.id, item.title, item.text)">
-                    Save note
-                </button>
-                <button @click="cancelEdit(item.id, item.title)">Cancel</button>
-            </div>
-            <div v-else>
-                <HighlightText :prop_text="item.title" :prop_match="filter" />
-                <HighlightText :prop_text="item.text" :prop_match="filter" />
-                <button @click="editMode = true">Edit</button>
-            </div>
-            <button @click="deleteNote(item.id)">delete note</button>
+        <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
+            <Note :note="item" :filter="filter" />
             <hr />
         </div>
     </div>
