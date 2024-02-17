@@ -1,6 +1,8 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import axios from 'axios'
+import idApi from '../../api/idApi.js'
+import notesApi from '../../api/notesApi.js'
 
 export const useStore = defineStore('notes', () => {
     const username = ref('')
@@ -18,96 +20,55 @@ export const useStore = defineStore('notes', () => {
 
     async function signIn(uname, password) {
         notes.value = []
-        const res = await axios.post(
-            'http://localhost:3001/api/login',
-            {
-                username: uname,
-                password,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        )
+        const res = await idApi.login(uname, password)
 
-        username.value = res.data.username
-        accessToken = res.data.accessToken
-        await getAllNotes()
+        username.value = res.username
+        accessToken = res.accessToken
+        await getAllNotes(accessToken)
     }
 
     async function signUp(uname, password) {
         notes.value = []
-        const res = await axios.post(
-            'http://localhost:3001/api/register',
-            {
-                username: uname,
-                password,
-            },
-            {
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            }
-        )
+        const res = await idApi.register(uname, password)
 
-        username.value = res.data.username
-        accessToken = res.data.accessToken
-        await getAllNotes()
+        username.value = res.username
+        accessToken = res.accessToken
+        await getAllNotes(accessToken)
     }
 
     async function getAllNotes() {
-        const res = await axios.get('http://localhost:3000/notes', {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        })
+        const res = await notesApi.listNotes(accessToken)
 
-        for (let n of res.data) {
+        for (let n of res.notes) {
             notes.value.push(n)
         }
     }
 
-    async function addNote(title, text, tags) {
-        const res = await axios.post(
-            'http://localhost:3000/notes',
-            {
-                title,
-                text,
-                tags,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
+    async function addNote(newNote) {
+        const { note: serverNote } = await notesApi.addNote(
+            accessToken,
+            newNote
         )
-        const newNote = { id: res.data, title, text, tags }
-        notes.value.push(newNote)
+        notes.value.push(serverNote)
     }
 
     async function deleteNote(id) {
-        await axios.delete(`http://localhost:3000/notes/${id}`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`,
-            },
-        })
+        await notesApi.deleteNote(accessToken, id)
         notes.value = notes.value.filter((data) => data.id !== id)
     }
 
-    async function updateNote(id, title, text) {
-        await axios.put(
-            `http://localhost:3000/notes/${id}`,
-            { title, text },
-            {
-                headers: {
-                    Authorization: `Bearer ${accessToken}`,
-                },
-            }
+    async function updateNote(id, updatedData) {
+        const { note: serverNote } = await notesApi.updateNote(
+            accessToken,
+            id,
+            updatedData
         )
-        let n = getNoteByID(id)
-        n.title = title
-        n.text = text
+
+        let vueNote = getNoteByID(id)
+        vueNote.title = serverNote.title
+        vueNote.text = serverNote.text
+        vueNote.tags = serverNote.tags
+        vueNote.updatedAt = serverNote.updatedAt
     }
 
     function getNoteByID(id) {

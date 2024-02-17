@@ -12,11 +12,10 @@ const textInput = ref(null)
 const editMode = ref(false)
 
 async function onSave() {
-    await store.updateNote(
-        props.note.id,
-        titleInput.value.value,
-        textInput.value.value
-    )
+    await store.updateNote(props.note.id, {
+        title: titleInput.value.value,
+        text: textInput.value.value,
+    })
 
     editMode.value = false
 }

@@ -12,7 +12,6 @@ const showSignUp = ref(false)
 const showNewNote = ref(false)
 
 async function onSignInSubmit(username, password) {
-    console.log(username, password)
     try {
         await store.signIn(username, password)
     } catch (e) {
@@ -22,7 +21,6 @@ async function onSignInSubmit(username, password) {
 }
 
 async function onSignUpSubmit(username, password) {
-    console.log(username, password)
     try {
         await store.signUp(username, password)
     } catch (e) {
@@ -33,8 +31,7 @@ async function onSignUpSubmit(username, password) {
 
 async function onAddNote(title, text, tags) {
     try {
-        console.log(title, text, tags)
-        await store.addNote(title, text, tags)
+        await store.addNote({ title, text, tags })
     } catch (e) {
         console.error(`ERROR: ${e}`)
     }
