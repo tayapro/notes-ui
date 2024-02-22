@@ -35,7 +35,6 @@ async function onDelete() {
 
 <template>
     <div>
-        <p>{{ props.note.id }}</p>
         <div v-if="editMode">
             <div><input ref="titleInput" :value="props.note.title" /></div>
             <div>
@@ -53,8 +52,6 @@ async function onDelete() {
                 :prop_text="props.note.text"
                 :prop_match="props.filter"
             />
-            <!-- <div>{{ props.note.title }}</div>
-            <div>{{ props.note.text }}</div> -->
             <button @click="onEdit()">Edit</button>
         </div>
         <button @click="onDelete()">delete note</button>
