@@ -1,6 +1,5 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import axios from 'axios'
 import idApi from '../../api/idApi.js'
 import notesApi from '../../api/notesApi.js'
 

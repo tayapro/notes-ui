@@ -31,10 +31,16 @@ function onCancel() {
 async function onDelete() {
     await store.deleteNote(props.note.id)
 }
+
+function getHumanTime(timeStamp) {
+    const date = new Date(timeStamp)
+    return date.toLocaleString()
+}
 </script>
 
 <template>
     <div>
+        <p>{{ getHumanTime(props.note.updatedAt) }}</p>
         <div v-if="editMode">
             <div><input ref="titleInput" :value="props.note.title" /></div>
             <div>

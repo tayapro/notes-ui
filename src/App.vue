@@ -23,7 +23,10 @@ function getFilteredNotes() {
         )
             filteredNotes.push(note)
     }
-    return filteredNotes
+    const filteredNotesByUpdateTime = filteredNotes
+        .sort((a, b) => a.updatedAt - b.updatedAt)
+        .reverse()
+    return filteredNotesByUpdateTime
 }
 </script>
 

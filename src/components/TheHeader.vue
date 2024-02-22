@@ -72,18 +72,6 @@ async function onAddNote(title, text, tags) {
         @cancel="showNewNote = false"
         @submit="onAddNote"
     />
-
-    <!-- <div class="container">
-        <div class="item">
-            <a class="logo" href="#">KARTINFLIX</a>
-        </div>
-        <div class="item links-container">
-            <a class="link" id="first-link" href="#">About</a>
-            <a class="link" href="#">Sign In</a>
-            <a class="link" href="#">Sign Up</a>
-            <a class="link" id="last-link" href="#">Help</a>
-        </div>
-    </div> -->
 </template>
 
 <style scoped>
