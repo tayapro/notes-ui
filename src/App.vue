@@ -1,7 +1,7 @@
 <script setup>
 import { useStore } from './store/notesStore'
-import NewNoteModal from './components/NewNoteModal.vue'
 import TheHeader from './components/TheHeader.vue'
+import TheFooter from './components/TheFooter.vue'
 import Note from './components/Note.vue'
 import { ref } from 'vue'
 
@@ -43,6 +43,7 @@ function getFilteredNotes() {
         </div>
         <!-- <img :src="imgUrl" /> -->
     </div>
+    <TheFooter />
 </template>
 
 <style scoped></style>
