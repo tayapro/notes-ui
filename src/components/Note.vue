@@ -39,8 +39,10 @@ function getHumanTime(timeStamp) {
 </script>
 
 <template>
-    <div>
-        <p>{{ getHumanTime(props.note.updatedAt) }}</p>
+    <div class="container">
+        <p class="note-updated-time">
+            {{ getHumanTime(props.note.updatedAt) }}
+        </p>
         <div v-if="editMode">
             <div><input ref="titleInput" :value="props.note.title" /></div>
             <div>
@@ -49,7 +51,7 @@ function getHumanTime(timeStamp) {
             <button @click="onSave()">Save note</button>
             <button @click="onCancel()">Cancel</button>
         </div>
-        <div v-else>
+        <div class="note" v-else>
             <HighlightText
                 :prop_text="props.note.title"
                 :prop_match="props.filter"
@@ -58,10 +60,32 @@ function getHumanTime(timeStamp) {
                 :prop_text="props.note.text"
                 :prop_match="props.filter"
             />
-            <button @click="onEdit()">Edit</button>
+            <div class="note-buttons">
+                <button @click="onEdit()">Edit</button>
+                <button @click="onDelete()">Delete note</button>
+            </div>
         </div>
-        <button @click="onDelete()">delete note</button>
     </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.note-buttons {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 0.8rem;
+}
+.note-updated-time {
+    font-size: 0.8rem;
+    margin: 0px;
+    padding: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.container {
+    padding-left: 10px;
+    padding-right: 10px;
+}
+</style>

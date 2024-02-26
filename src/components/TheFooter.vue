@@ -111,7 +111,6 @@ footer {
     left: 0;
     z-index: 10;
     width: 100%;
-    font-family: Montserrat;
     font-size: 0.8rem;
 }
 </style>

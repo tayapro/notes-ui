@@ -5,17 +5,19 @@ import TheFooter from './components/TheFooter.vue'
 import Note from './components/Note.vue'
 import { ref } from 'vue'
 
-// const imgUrl = new URL(
-//     './assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
-//     import.meta.url
-// ).href
+const imgUrl = new URL(
+    './assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
+    // '../assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
+    import.meta.url
+).href
+
+console.log(imgUrl)
 
 const store = useStore()
 let filter = ref('')
 
 function getFilteredNotes() {
     let filteredNotes = []
-    // TODO: why store.notes but not store.notes.value
     for (let note of store.notes) {
         if (
             note.title.includes(filter.value) ||
@@ -32,8 +34,7 @@ function getFilteredNotes() {
 
 <template>
     <TheHeader />
-    <div>
-        <h3>Notes</h3>
+    <div class="main-container">
         <div class="search">
             <input placeholder="Search" v-model="filter" />
         </div>
@@ -41,9 +42,17 @@ function getFilteredNotes() {
             <Note :note="item" :filter="filter" />
             <hr />
         </div>
-        <!-- <img :src="imgUrl" /> -->
     </div>
     <TheFooter />
 </template>
 
-<style scoped></style>
+<style scoped>
+.main-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+    top: 4rem;
+    font-family: Montserrat;
+}
+</style>
