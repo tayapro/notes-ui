@@ -34,10 +34,10 @@ function getFilteredNotes() {
 
 <template>
     <TheHeader />
+    <div class="search">
+        <input placeholder="Search" v-model="filter" />
+    </div>
     <div class="main-container">
-        <div class="search">
-            <input placeholder="Search" v-model="filter" />
-        </div>
         <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
             <Note :note="item" :filter="filter" />
             <hr />
@@ -52,7 +52,29 @@ function getFilteredNotes() {
     justify-content: center;
     flex-direction: column;
     position: relative;
+    top: 6rem;
+}
+
+.search {
+    display: flex;
+    justify-content: end;
+    padding-right: 0.5rem;
+    margin-top: 5px;
+    position: fixed;
     top: 4rem;
-    font-family: Montserrat;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+}
+
+input {
+    border: 1px solid rgba(51, 51, 52, 0.601);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+input:focus {
+    outline: none;
+    border: 1px solid rgba(51, 51, 52, 0.781);
 }
 </style>

@@ -44,12 +44,25 @@ function getHumanTime(timeStamp) {
             {{ getHumanTime(props.note.updatedAt) }}
         </p>
         <div v-if="editMode">
-            <div><input ref="titleInput" :value="props.note.title" /></div>
             <div>
-                <textarea ref="textInput" rows="10" :value="props.note.text" />
+                <input
+                    class="edit-note"
+                    ref="titleInput"
+                    :value="props.note.title"
+                />
             </div>
-            <button @click="onSave()">Save note</button>
-            <button @click="onCancel()">Cancel</button>
+            <div>
+                <textarea
+                    class="edit-note"
+                    ref="textInput"
+                    rows="10"
+                    :value="props.note.text"
+                />
+            </div>
+            <div class="note-buttons">
+                <button @click="onSave()">Save note</button>
+                <button @click="onCancel()">Cancel</button>
+            </div>
         </div>
         <div class="note" v-else>
             <HighlightText
@@ -69,13 +82,40 @@ function getHumanTime(timeStamp) {
 </template>
 
 <style scoped>
+.edit-note {
+    border: 1px solid rgba(51, 51, 52, 0.601);
+    border-radius: 5px;
+    padding: 10px;
+    width: 70%;
+    margin-top: 0.3rem;
+    box-sizing: border-box;
+    resize: none;
+}
+
 .note-buttons {
     display: flex;
     justify-content: left;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
     margin-top: 0.8rem;
 }
+
+button {
+    border-radius: 5px;
+    border-color: rgba(36, 36, 255, 0.65);
+    background-color: rgba(36, 36, 255, 0.65);
+    color: aliceblue;
+    padding: 0.5rem;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: rgba(31, 31, 220, 0.65);
+    border: none;
+    border-color: rgba(31, 31, 220, 0.65);
+}
+
 .note-updated-time {
     font-size: 0.8rem;
     margin: 0px;

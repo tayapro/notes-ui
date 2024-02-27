@@ -84,7 +84,7 @@ async function onAddNote(title, text, tags) {
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 100;
+    z-index: 10;
     align-items: center;
     display: flex;
     padding-top: 10px;
@@ -107,7 +107,6 @@ async function onAddNote(title, text, tags) {
     background-color: azure;
     padding: 0.6rem 0.7rem;
     text-decoration: none;
-    font-family: Montserrat;
     color: rgb(51, 51, 52);
     border: 1px solid rgba(51, 51, 52, 0.601);
     border-radius: 5px;
@@ -121,7 +120,7 @@ async function onAddNote(title, text, tags) {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 10px;
+    padding-right: 0.5rem;
     gap: 5px;
 }
 </style>
