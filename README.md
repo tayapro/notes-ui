@@ -10,10 +10,12 @@ This template should help get you started developing with Vue 3 in Vite. The tem
 
 ## v0.0.1-alpha
 
--   [x] add header
--   [x] add main container
--   [x] add footer
+-   [x] Add header
+-   [x] Add main container
+-   [x] Add footer
 
 # Known issues
 
 -   [ ] Notes scroll under the footer, header and search
+-   [ ] Does not show user name on `logout` button upon sign up
+-   [ ] UI does not respond to backend errors properly, e.g. when sign up existing user
