@@ -42,7 +42,7 @@ const props = defineProps(['prop_visible'])
     background-color: rgba(99, 119, 119, 0.362);
     height: 100vh;
     width: 100vw;
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     z-index: 100;

@@ -39,17 +39,20 @@ async function onAddNote(title, text, tags) {
 </script>
 
 <template>
-    <div v-if="store.isLoggedIn()">
-        <div>
-            <button @click="store.logout()">
+    <div class="container">
+        <div class="item">
+            <a class="logo" href="#">NOTES</a>
+        </div>
+        <div class="item links-container" v-if="store.isLoggedIn()">
+            <button class="link" @click="store.logout()">
                 logout ::: {{ store.username }}
             </button>
-            <button @click="showNewNote = true">New Note</button>
+            <button class="link" @click="showNewNote = true">New Note</button>
         </div>
-    </div>
-    <div v-else>
-        <button @click="showSignIn = true">Sign in</button>
-        <button @click="showSignUp = true">Sign up</button>
+        <div class="item links-container" v-else>
+            <button class="link" @click="showSignIn = true">Sign in</button>
+            <button class="link" @click="showSignUp = true">Sign up</button>
+        </div>
     </div>
 
     <LoginModal
@@ -72,67 +75,52 @@ async function onAddNote(title, text, tags) {
         @cancel="showNewNote = false"
         @submit="onAddNote"
     />
-
-    <!-- <div class="container">
-        <div class="item">
-            <a class="logo" href="#">KARTINFLIX</a>
-        </div>
-        <div class="item links-container">
-            <a class="link" id="first-link" href="#">About</a>
-            <a class="link" href="#">Sign In</a>
-            <a class="link" href="#">Sign Up</a>
-            <a class="link" id="last-link" href="#">Help</a>
-        </div>
-    </div> -->
 </template>
 
 <style scoped>
+.container {
+    background-color: azure;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    align-items: center;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .logo {
     font-family: Lilita One;
     font-size: 2rem;
-    border: 1px solid black;
-    border-radius: 5px;
     padding: 0 0.5rem;
     text-decoration: none;
-    color: indigo;
+    color: rgb(51, 51, 52);
+    margin-left: 10px;
 }
 .item {
-    /* border: 1px solid indigo; */
     flex-grow: 1;
 }
 
 .link {
-    background-color: rgb(34, 34, 193);
-    /* border-radius: 5px; */
+    background-color: azure;
     padding: 0.6rem 0.7rem;
     text-decoration: none;
-    font-family: Montserrat;
-    color: aliceblue;
-}
-
-#first-link {
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-#last-link {
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    color: rgb(51, 51, 52);
+    border: 1px solid rgba(51, 51, 52, 0.601);
+    border-radius: 5px;
 }
 
 .link:hover {
-    background-color: rgb(29, 29, 157);
+    background-color: rgb(212, 225, 225);
 }
 
 .links-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-}
-
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    padding-right: 0.5rem;
+    gap: 5px;
 }
 </style>
