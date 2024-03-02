@@ -112,5 +112,6 @@ footer {
     z-index: 10;
     width: 100%;
     font-size: 0.8rem;
+    overflow: hidden;
 }
 </style>

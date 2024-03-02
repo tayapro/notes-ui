@@ -5,14 +5,6 @@ import TheFooter from './components/TheFooter.vue'
 import Note from './components/Note.vue'
 import { ref } from 'vue'
 
-const imgUrl = new URL(
-    './assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
-    // '../assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
-    import.meta.url
-).href
-
-console.log(imgUrl)
-
 const store = useStore()
 let filter = ref('')
 
@@ -48,11 +40,10 @@ function getFilteredNotes() {
 
 <style scoped>
 .main-container {
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
     position: relative;
-    top: 6rem;
+    overflow: auto;
+    padding-bottom: 6rem;
+    padding-top: 6rem;
 }
 
 .search {

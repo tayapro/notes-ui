@@ -89,6 +89,7 @@ async function onAddNote(title, text, tags) {
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
+    overflow: hidden;
 }
 
 .logo {
