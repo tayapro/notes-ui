@@ -32,3 +32,4 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [ ] Notes scroll under the footer, header and search
 -   [ ] Does not show user name on `logout` button upon sign up
 -   [ ] UI does not respond to backend errors properly, e.g. when sign up existing user
+-   [ ] After adding new note with missing title, UI does not show any newly added notes after that

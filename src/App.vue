@@ -25,25 +25,34 @@ function getFilteredNotes() {
 </script>
 
 <template>
-    <TheHeader />
+    <div class="main-container">
+        <TheHeader />
+        <div class="content">
+            <div>
+                <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
+                    <Note :note="item" :filter="filter" />
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <TheFooter />
+    </div>
     <div class="search">
         <input placeholder="Search" v-model="filter" />
     </div>
-    <div class="main-container">
-        <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
-            <Note :note="item" :filter="filter" />
-            <hr />
-        </div>
-    </div>
-    <TheFooter />
 </template>
 
 <style scoped>
 .main-container {
-    position: relative;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.content {
+    flex: 1;
     overflow: auto;
-    padding-bottom: 6rem;
-    padding-top: 6rem;
 }
 
 .search {
