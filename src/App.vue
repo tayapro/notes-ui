@@ -5,14 +5,6 @@ import TheFooter from './components/TheFooter.vue'
 import Note from './components/Note.vue'
 import { ref } from 'vue'
 
-const imgUrl = new URL(
-    './assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
-    // '../assets/colorful-floral-background-with-poppy-illustration-remixed-from-public-domain-artworks.jpg',
-    import.meta.url
-).href
-
-console.log(imgUrl)
-
 const store = useStore()
 let filter = ref('')
 
@@ -33,26 +25,34 @@ function getFilteredNotes() {
 </script>
 
 <template>
-    <TheHeader />
+    <div class="main-container">
+        <TheHeader />
+        <div class="content">
+            <div>
+                <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
+                    <Note :note="item" :filter="filter" />
+                    <hr />
+                </div>
+            </div>
+        </div>
+        <TheFooter />
+    </div>
     <div class="search">
         <input placeholder="Search" v-model="filter" />
     </div>
-    <div class="main-container">
-        <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
-            <Note :note="item" :filter="filter" />
-            <hr />
-        </div>
-    </div>
-    <TheFooter />
 </template>
 
 <style scoped>
 .main-container {
+    height: 100%;
     display: flex;
-    justify-content: center;
     flex-direction: column;
-    position: relative;
-    top: 6rem;
+    gap: 10px;
+}
+
+.content {
+    flex: 1;
+    overflow: auto;
 }
 
 .search {

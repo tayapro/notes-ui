@@ -80,15 +80,13 @@ async function onAddNote(title, text, tags) {
 <style scoped>
 .container {
     background-color: azure;
-    position: fixed;
-    top: 0;
-    left: 0;
     width: 100%;
     z-index: 10;
     align-items: center;
     display: flex;
     padding-top: 10px;
     padding-bottom: 10px;
+    overflow: hidden;
 }
 
 .logo {

@@ -37,6 +37,7 @@ async function register(username, password) {
         })
         return {
             status,
+            username: data.username,
             refreshToken: data.refreshToken,
             accessToken: data.accessToken,
         }

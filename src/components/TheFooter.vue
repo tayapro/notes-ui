@@ -106,11 +106,9 @@ a:hover {
 
 footer {
     background-color: azure;
-    position: fixed;
-    bottom: 0;
-    left: 0;
     z-index: 10;
     width: 100%;
     font-size: 0.8rem;
+    overflow: hidden;
 }
 </style>
