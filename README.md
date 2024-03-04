@@ -27,9 +27,14 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [x] Add main container
 -   [x] Add footer
 
-# Known issues
+## v0.0.2-alpha
 
--   [ ] Notes scroll under the footer, header and search
--   [ ] Does not show user name on `logout` button upon sign up
+-   [x] Notes scroll under the footer, header and search
+-   [x] Does not show user name on `logout` button upon sign up
+
+## v0.0.3-alpha
+
 -   [ ] UI does not respond to backend errors properly, e.g. when sign up existing user
 -   [ ] After adding new note with missing title, UI does not show any newly added notes after that
+-   [ ] Sign up should NOT automaticaly login user
+-   [ ] Add `error` text to sign in modal. Do not close upon error, just show it
