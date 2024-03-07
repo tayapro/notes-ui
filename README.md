@@ -38,3 +38,4 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [ ] After adding new note with missing title, UI does not show any newly added notes after that
 -   [ ] Sign up should NOT automaticaly login user
 -   [ ] Add `error` text to sign in modal. Do not close upon error, just show it
+-   [x] Fix vulnerabilities and deprecation warnings
