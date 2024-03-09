@@ -44,11 +44,10 @@ export const useStore = defineStore('notes', () => {
     }
 
     async function addNote(newNote) {
-        const { note: serverNote } = await notesApi.addNote(
-            accessToken,
-            newNote
-        )
-        notes.value.push(serverNote)
+        const result = await notesApi.addNote(accessToken, newNote)
+        if (result.status === 200) {
+            notes.value.push(result.note)
+        }
     }
 
     async function deleteNote(id) {
