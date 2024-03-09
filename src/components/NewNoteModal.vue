@@ -4,18 +4,23 @@ import ModalBase from './lib/ModalBase.vue'
 const emit = defineEmits(['cancel', 'submit'])
 const props = defineProps(['greeting', 'visible'])
 
-const titleRef = ref()
-const textRef = ref()
+const titleRef = ref('')
+const textRef = ref('')
 const tagsRef = ref()
 
 function onSubmit() {
-    const title = titleRef.value.value
-    const text = textRef.value.value
+    const title = titleRef.value
+    const text = textRef.value
     const tags = tagsRef.value.value
+
     emit('submit', title, text, tags)
-    titleRef.value.value = ''
-    textRef.value.value = ''
+    titleRef.value = ''
+    textRef.value = ''
     tagsRef.value.value = ''
+}
+
+function isDisabled() {
+    return titleRef.value.length === 0 || textRef.value.length === 0
 }
 </script>
 
@@ -23,11 +28,17 @@ function onSubmit() {
     <ModalBase :prop_visible="props.visible">
         <div class="modal">
             <h3>{{ props.greeting }}</h3>
-            <input ref="titleRef" type="text" placeholder="title" />
-            <input ref="textRef" type="text" placeholder="text" />
+            <input type="text" placeholder="title" v-model="titleRef" />
+            <input type="text" placeholder="text" v-model="textRef" />
             <input ref="tagsRef" type="text" placeholder="tag" />
             <div class="btns">
-                <button @click="onSubmit()">submit</button>
+                <button
+                    class="submit"
+                    @click="onSubmit()"
+                    :disabled="isDisabled()"
+                >
+                    submit
+                </button>
                 <button @click="emit('cancel')">cancel</button>
             </div>
         </div>

@@ -39,3 +39,4 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [ ] Sign up should NOT automaticaly login user
 -   [ ] Add `error` text to sign in modal. Do not close upon error, just show it
 -   [x] Fix vulnerabilities and deprecation warnings
+-   [x] Review dependencies in package.json
