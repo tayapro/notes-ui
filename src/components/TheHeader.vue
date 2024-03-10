@@ -9,14 +9,17 @@ const store = useStore()
 const showSignIn = ref(false)
 const showSignUp = ref(false)
 const showNewNote = ref(false)
+const errorMgsSignIn = ref('')
 
 async function onSignInSubmit(username, password) {
     try {
         await store.signIn(username, password)
+        showSignIn.value = false
+        errorMgsSignIn.value = ''
     } catch (e) {
         console.error(`ERROR: ${e}`)
+        errorMgsSignIn.value = e.message
     }
-    showSignIn.value = false
 }
 
 async function onSignUpSubmit(username, password) {
@@ -35,6 +38,12 @@ async function onAddNote(title, text, tags) {
         console.error(`ERROR: ${e}`)
     }
     showNewNote.value = false
+}
+
+function onCancel() {
+    showSignIn.value = false
+    showSignUp.value = false
+    errorMgsSignIn.value = ''
 }
 </script>
 
@@ -58,14 +67,15 @@ async function onAddNote(title, text, tags) {
     <LoginModal
         greeting="Sign In"
         :visible="showSignIn"
-        @cancel="showSignIn = false"
+        @cancel="onCancel()"
         @submit="onSignInSubmit"
+        :errorMsg="errorMgsSignIn"
     />
 
     <LoginModal
         greeting="Sign Up"
         :visible="showSignUp"
-        @cancel="showSignUp = false"
+        @cancel="onCancel()"
         @submit="onSignUpSubmit"
     />
 

@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 import ModalBase from './lib/ModalBase.vue'
 const emit = defineEmits(['cancel', 'submit'])
-const props = defineProps(['greeting', 'visible'])
+const props = defineProps(['greeting', 'visible', 'errorMsg'])
 
 const usernameRef = ref()
 const passwordRef = ref()
@@ -13,7 +13,6 @@ function onSubmit() {
     emit('submit', username, password)
     usernameRef.value.value = ''
     passwordRef.value.value = ''
-    // this.$refs.passwordRef.internalValue = ''
 }
 </script>
 
@@ -27,11 +26,15 @@ function onSubmit() {
                 <button @click="onSubmit()">submit</button>
                 <button @click="emit('cancel')">cancel</button>
             </div>
+            <span>{{ props.errorMsg }}</span>
         </div>
     </ModalBase>
 </template>
 
 <style scoped>
+span {
+    color: red;
+}
 .modal {
     background-color: rgb(255, 255, 255);
     padding: 2rem;
