@@ -21,7 +21,7 @@ export const useStore = defineStore('notes', () => {
         notes.value = []
         const res = await idApi.login(uname, password)
         if (res.status !== 200) {
-            throw new Error('Login or password is not correct')
+            throw new Error('Username or password is not correct')
         }
 
         username.value = res.username
@@ -32,6 +32,9 @@ export const useStore = defineStore('notes', () => {
     async function signUp(uname, password) {
         notes.value = []
         const res = await idApi.register(uname, password)
+        if (res.status !== 200) {
+            throw new Error('Ooops... something happened')
+        }
 
         username.value = res.username
         accessToken = res.accessToken
