@@ -43,6 +43,9 @@ export const useStore = defineStore('notes', () => {
 
     async function getAllNotes() {
         const res = await notesApi.listNotes(accessToken)
+        if (res.status !== 200) {
+            throw new Error('Ooops... something happened')
+        }
 
         for (let n of res.notes) {
             notes.value.push(n)
@@ -50,29 +53,32 @@ export const useStore = defineStore('notes', () => {
     }
 
     async function addNote(newNote) {
-        const result = await notesApi.addNote(accessToken, newNote)
-        if (result.status === 200) {
-            notes.value.push(result.note)
+        const res = await notesApi.addNote(accessToken, newNote)
+        if (res.status !== 200) {
+            throw new Error('Ooops... something happened')
         }
+        notes.value.push(res.note)
     }
 
     async function deleteNote(id) {
-        await notesApi.deleteNote(accessToken, id)
+        const res = await notesApi.deleteNote(accessToken, id)
+        if (res.status !== 204) {
+            throw new Error('Ooops... something happened')
+        }
         notes.value = notes.value.filter((data) => data.id !== id)
     }
 
     async function updateNote(id, updatedData) {
-        const { note: serverNote } = await notesApi.updateNote(
-            accessToken,
-            id,
-            updatedData
-        )
+        const res = await notesApi.updateNote(accessToken, id, updatedData)
+        if (res.status !== 200) {
+            throw new Error('Ooops... something happened')
+        }
 
         let vueNote = getNoteByID(id)
-        vueNote.title = serverNote.title
-        vueNote.text = serverNote.text
-        vueNote.tags = serverNote.tags
-        vueNote.updatedAt = serverNote.updatedAt
+        vueNote.title = res.note.title
+        vueNote.text = res.note.text
+        vueNote.tags = res.note.tags
+        vueNote.updatedAt = res.note.updatedAt
     }
 
     function getNoteByID(id) {
