@@ -56,7 +56,8 @@ function onCancel() {
         </div>
         <div class="item links-container" v-if="store.isLoggedIn()">
             <button class="link" @click="store.logout()">
-                logout ::: {{ store.username }}
+                logout :::
+                <p class="logout">{{ store.username }}</p>
             </button>
             <button class="link" @click="showNewNote = true">New Note</button>
         </div>
@@ -133,5 +134,13 @@ function onCancel() {
     align-items: center;
     padding-right: 0.5rem;
     gap: 5px;
+}
+
+p {
+    all: unset;
+}
+
+.logout {
+    font-weight: 700;
 }
 </style>

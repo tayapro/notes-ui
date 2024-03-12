@@ -22,35 +22,56 @@ function onSubmit() {
             <h3>{{ props.greeting }}</h3>
             <input ref="usernameRef" type="text" placeholder="username" />
             <input ref="passwordRef" type="text" placeholder="password" />
-            <div class="btns">
-                <button @click="onSubmit()">submit</button>
-                <button @click="emit('cancel')">cancel</button>
+            <div class="div-btns">
+                <button class="btn" @click="onSubmit()">submit</button>
+                <button class="btn" @click="emit('cancel')">cancel</button>
             </div>
-            <span>{{ props.errorMsg }}</span>
+            <span class="error">{{ props.errorMsg }}</span>
         </div>
     </ModalBase>
 </template>
 
 <style scoped>
-span {
+.btn {
+    padding: 0.3rem;
+    padding-right: 0.6rem;
+    padding-left: 0.6rem;
+}
+
+.error {
     color: red;
+    width: 100%;
+    height: 1rem;
+    font-size: 0.8rem;
+    text-align: center;
+    margin-top: 1rem;
 }
 .modal {
     background-color: rgb(255, 255, 255);
-    padding: 2rem;
+    padding: 1.5rem;
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.35);
     display: flex;
     flex-direction: column;
+    width: 300px;
+    padding-top: 0.7rem;
+    padding-bottom: 0.7rem;
+}
+
+.modal h3 {
+    text-align: center;
 }
 
 .modal input {
     margin-bottom: 0.7rem;
     padding: 0.3rem;
+    margin-left: 1.3rem;
+    margin-right: 1.3rem;
     text-align: center;
 }
 
-.btns {
+.div-btns {
     display: flex;
     justify-content: space-around;
+    margin-top: 0.7rem;
 }
 </style>
