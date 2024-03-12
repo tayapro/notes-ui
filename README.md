@@ -34,7 +34,9 @@ VITE_BASE_BE_URL="http://localhost:3000"
 
 ## v0.0.3-alpha
 
--   [ ] UI does not respond to backend errors properly, e.g. when sign up existing user
--   [ ] After adding new note with missing title, UI does not show any newly added notes after that
--   [ ] Sign up should NOT automaticaly login user
--   [ ] Add `error` text to sign in modal. Do not close upon error, just show it
+-   [x] Add styles for error message to sign up/sign in modals
+-   [x] Add error text to sign in modal. Do not close upon error, just show it
+-   [x] Add error text to sign up modal. Do not close upon error, just show it
+-   [x] After adding new note with missing title, UI does not show any newly added notes after that
+-   [x] UI does not respond to backend errors properly, e.g. when sign up existing user
+-   [x] Review dependencies in package.json

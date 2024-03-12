@@ -9,23 +9,28 @@ const store = useStore()
 const showSignIn = ref(false)
 const showSignUp = ref(false)
 const showNewNote = ref(false)
+const errorMsg = ref('')
 
 async function onSignInSubmit(username, password) {
     try {
         await store.signIn(username, password)
+        showSignIn.value = false
+        errorMsg.value = ''
     } catch (e) {
         console.error(`ERROR: ${e}`)
+        errorMsg.value = e.message
     }
-    showSignIn.value = false
 }
 
 async function onSignUpSubmit(username, password) {
     try {
         await store.signUp(username, password)
+        showSignUp.value = false
+        errorMsg.value = ''
     } catch (e) {
         console.error(`ERROR: ${e}`)
+        errorMsg.value = e.message
     }
-    showSignUp.value = false
 }
 
 async function onAddNote(title, text, tags) {
@@ -36,6 +41,12 @@ async function onAddNote(title, text, tags) {
     }
     showNewNote.value = false
 }
+
+function onCancel() {
+    showSignIn.value = false
+    showSignUp.value = false
+    errorMsg.value = ''
+}
 </script>
 
 <template>
@@ -45,7 +56,8 @@ async function onAddNote(title, text, tags) {
         </div>
         <div class="item links-container" v-if="store.isLoggedIn()">
             <button class="link" @click="store.logout()">
-                logout ::: {{ store.username }}
+                logout :::
+                <p class="logout">{{ store.username }}</p>
             </button>
             <button class="link" @click="showNewNote = true">New Note</button>
         </div>
@@ -58,15 +70,17 @@ async function onAddNote(title, text, tags) {
     <LoginModal
         greeting="Sign In"
         :visible="showSignIn"
-        @cancel="showSignIn = false"
+        @cancel="onCancel()"
         @submit="onSignInSubmit"
+        :errorMsg="errorMsg"
     />
 
     <LoginModal
         greeting="Sign Up"
         :visible="showSignUp"
-        @cancel="showSignUp = false"
+        @cancel="onCancel()"
         @submit="onSignUpSubmit"
+        :errorMsg="errorMsg"
     />
 
     <NewNoteModal
@@ -120,5 +134,13 @@ async function onAddNote(title, text, tags) {
     align-items: center;
     padding-right: 0.5rem;
     gap: 5px;
+}
+
+p {
+    all: unset;
+}
+
+.logout {
+    font-weight: 700;
 }
 </style>
