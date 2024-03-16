@@ -1,15 +1,10 @@
 <script setup>
 import { ref } from 'vue'
 import ModalBase from './lib/ModalBase.vue'
+import { XMarkIcon as CloseIcn } from '@heroicons/vue/24/outline'
+
 const emit = defineEmits(['cancel', 'submit'])
-const props = defineProps([
-    'greeting',
-    'visible',
-    'errorMsg',
-    // 'prop_text',
-    // 'prop_icon',
-])
-// import { XMarkIcon } from '@heroicons/vue/24/outline'
+const props = defineProps(['greeting', 'visible', 'errorMsg'])
 
 const usernameRef = ref()
 const passwordRef = ref()
@@ -28,20 +23,7 @@ function onSubmit() {
         <div class="modal">
             <div class="xmark-div">
                 <button class="xmark-btn" @click="emit('cancel')">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M6 18 18 6M6 6l12 12"
-                        />
-                    </svg>
+                    <CloseIcn />
                 </button>
             </div>
             <div class="greeting">
@@ -51,13 +33,6 @@ function onSubmit() {
             <input ref="usernameRef" type="text" placeholder="Username" />
             <input ref="passwordRef" type="text" placeholder="Password" />
             <button class="submit-btn" @click="onSubmit()">submit</button>
-            <!-- <XMarkIcon size="1.0rem" /> -->
-            <!-- <button>
-                    <div class="button-with-icon">
-                        <component :is="XMarkIcon" class="icon" />
-                        <p>{{ prop_text }}</p>
-                    </div>
-                </button> -->
             <span class="error">{{ props.errorMsg }}</span>
         </div>
     </ModalBase>
