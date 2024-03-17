@@ -55,6 +55,9 @@ function onCancel() {
             <a class="logo" href="#">NOTES</a>
         </div>
         <div class="item links-container" v-if="store.isLoggedIn()">
+            <div class="search">
+                <input placeholder="Search" v-model="store.filter" />
+            </div>
             <button class="link" @click="store.logout()">
                 logout :::
                 <p class="logout">{{ store.username }}</p>
@@ -92,6 +95,18 @@ function onCancel() {
 </template>
 
 <style scoped>
+/* .search {
+    display: flex;
+    justify-content: end;
+    padding-right: 0.5rem;
+    margin-top: 5px;
+    position: fixed;
+    top: 4rem;
+    right: 0;
+    width: 100%;
+    z-index: 10;
+} */
+
 .container {
     background-color: azure;
     width: 100%;

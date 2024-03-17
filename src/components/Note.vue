@@ -40,9 +40,11 @@ function getHumanTime(timeStamp) {
 
 <template>
     <div class="container">
-        <p class="note-updated-time">
-            {{ getHumanTime(props.note.updatedAt) }}
-        </p>
+        <div class="note-updated-time">
+            <p>
+                {{ getHumanTime(props.note.updatedAt) }}
+            </p>
+        </div>
         <div v-if="editMode">
             <div>
                 <input
@@ -125,7 +127,7 @@ button:hover {
 }
 
 .container {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 10px;
+    background-color: aqua;
 }
 </style>

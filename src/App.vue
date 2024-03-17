@@ -6,14 +6,14 @@ import Note from './components/Note.vue'
 import { ref } from 'vue'
 
 const store = useStore()
-let filter = ref('')
 
 function getFilteredNotes() {
     let filteredNotes = []
+    console.log('hello', store.filter)
     for (let note of store.notes) {
         if (
-            note.title.includes(filter.value) ||
-            note.text.includes(filter.value)
+            note.title.includes(store.filter) ||
+            note.text.includes(store.filter)
         )
             filteredNotes.push(note)
     }
@@ -28,43 +28,31 @@ function getFilteredNotes() {
     <div class="main-container">
         <TheHeader />
         <div class="content">
-            <div>
-                <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
-                    <Note :note="item" :filter="filter" />
-                    <hr />
-                </div>
+            <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
+                <Note :note="item" :filter="store.filter" />
             </div>
         </div>
         <TheFooter />
     </div>
-    <div class="search">
-        <input placeholder="Search" v-model="filter" />
-    </div>
 </template>
 
 <style scoped>
+.content {
+    flex: 1;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    padding-left: 10px;
+    padding-right: 10px;
+    /* border: 2px solid black; */
+}
+
 .main-container {
     height: 100%;
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.content {
-    flex: 1;
-    overflow: auto;
-}
-
-.search {
-    display: flex;
-    justify-content: end;
-    padding-right: 0.5rem;
-    margin-top: 5px;
-    position: fixed;
-    top: 4rem;
-    right: 0;
-    width: 100%;
-    z-index: 10;
 }
 
 input {
