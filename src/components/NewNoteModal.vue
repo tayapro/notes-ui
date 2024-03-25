@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue'
 import ModalBase from './lib/ModalBase.vue'
+import { XMarkIcon as CloseIcn } from '@heroicons/vue/24/outline'
+
 const emit = defineEmits(['cancel', 'submit'])
 const props = defineProps(['greeting', 'visible'])
 
@@ -27,41 +29,74 @@ function isDisabled() {
 <template>
     <ModalBase :prop_visible="props.visible">
         <div class="modal">
-            <h3>{{ props.greeting }}</h3>
+            <div class="xmark-div">
+                <button class="xmark-btn" @click="emit('cancel')">
+                    <CloseIcn />
+                </button>
+            </div>
+            <div class="greeting">
+                <h3>{{ props.greeting }}</h3>
+            </div>
             <input type="text" placeholder="title" v-model="titleRef" />
             <input type="text" placeholder="text" v-model="textRef" />
             <input ref="tagsRef" type="text" placeholder="tag" />
-            <div class="btns">
-                <button
-                    class="submit"
-                    @click="onSubmit()"
-                    :disabled="isDisabled()"
-                >
-                    submit
-                </button>
-                <button @click="emit('cancel')">cancel</button>
-            </div>
+            <button
+                class="submit-btn"
+                @click="onSubmit()"
+                :disabled="isDisabled()"
+            >
+                submit
+            </button>
         </div>
     </ModalBase>
 </template>
 
 <style scoped>
-.modal {
+.greeting {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.submit-btn {
+    padding: 0.5rem;
+    color: rgb(245, 245, 245);
+    background-color: rgb(0, 153, 153);
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.xmark-div {
+    display: flex;
+    justify-content: end;
+    /* align-items: center; */
+}
+
+.xmark-btn {
+    display: flex;
+    padding: 0.01rem;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: none;
     background-color: rgb(255, 255, 255);
-    padding: 2rem;
-    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.35);
+    width: 1.3rem;
+    height: 1.3rem;
+}
+
+.modal {
     display: flex;
     flex-direction: column;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.35);
+    width: 20rem;
+    padding: 2rem;
 }
 
 .modal input {
     margin-bottom: 0.7rem;
     padding: 0.3rem;
     text-align: center;
-}
-
-.btns {
-    display: flex;
-    justify-content: space-around;
 }
 </style>

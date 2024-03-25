@@ -89,7 +89,7 @@ svg {
 
 a:hover {
     cursor: pointer;
-    font-weight: 900;
+    font-weight: 700;
 }
 
 .links {
@@ -105,7 +105,7 @@ a:hover {
 }
 
 footer {
-    background-color: azure;
+    background-color: rgb(231, 231, 231);
     z-index: 10;
     width: 100%;
     font-size: 0.8rem;

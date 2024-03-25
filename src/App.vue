@@ -3,13 +3,11 @@ import { useStore } from './store/notesStore'
 import TheHeader from './components/TheHeader.vue'
 import TheFooter from './components/TheFooter.vue'
 import Note from './components/Note.vue'
-import { ref } from 'vue'
 
 const store = useStore()
 
 function getFilteredNotes() {
     let filteredNotes = []
-    console.log('hello', store.filter)
     for (let note of store.notes) {
         if (
             note.title.includes(store.filter) ||
@@ -27,7 +25,7 @@ function getFilteredNotes() {
 <template>
     <div class="main-container">
         <TheHeader />
-        <div class="content">
+        <div class="content-container">
             <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
                 <Note :note="item" :filter="store.filter" />
             </div>
@@ -37,15 +35,15 @@ function getFilteredNotes() {
 </template>
 
 <style scoped>
-.content {
+.content-container {
     flex: 1;
     overflow: auto;
     display: flex;
     flex-direction: column;
     gap: 2rem;
-    padding-left: 10px;
-    padding-right: 10px;
-    /* border: 2px solid black; */
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 1.7rem;
 }
 
 .main-container {
@@ -53,16 +51,5 @@ function getFilteredNotes() {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-input {
-    border: 1px solid rgba(51, 51, 52, 0.601);
-    border-radius: 5px;
-    padding: 10px;
-}
-
-input:focus {
-    outline: none;
-    border: 1px solid rgba(51, 51, 52, 0.781);
 }
 </style>

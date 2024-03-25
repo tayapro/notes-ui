@@ -58,7 +58,6 @@ function onSubmit() {
     cursor: pointer;
     border: none;
     background-color: rgb(255, 255, 255);
-    border-radius: 5px;
     width: 1.3rem;
     height: 1.3rem;
     margin-right: 1.3rem;
@@ -72,7 +71,7 @@ function onSubmit() {
     color: rgb(245, 245, 245);
     background-color: rgb(0, 153, 153);
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
 }
 
 .error {
@@ -89,7 +88,7 @@ function onSubmit() {
     box-shadow: 5px 5px 10px 0px rgba(0, 0, 0, 0.35);
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 20rem;
     padding-bottom: 0.7rem;
 }
 
