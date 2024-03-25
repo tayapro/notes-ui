@@ -67,10 +67,12 @@ function getHumanTime(timeStamp) {
             </div>
         </div>
         <div class="note" v-else>
-            <HighlightText
-                :prop_text="props.note.title"
-                :prop_match="props.filter"
-            />
+            <h2>
+                <HighlightText
+                    :prop_text="props.note.title"
+                    :prop_match="props.filter"
+                />
+            </h2>
             <HighlightText
                 :prop_text="props.note.text"
                 :prop_match="props.filter"

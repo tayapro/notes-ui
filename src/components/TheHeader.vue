@@ -2,6 +2,7 @@
 import { useStore } from '../store/notesStore'
 import LoginModal from './LoginModal.vue'
 import NewNoteModal from './NewNoteModal.vue'
+import BaseTooltip from './lib/BaseTooltip.vue'
 
 import { ref } from 'vue'
 import {
@@ -15,6 +16,8 @@ const showSignIn = ref(false)
 const showSignUp = ref(false)
 const showNewNote = ref(false)
 const errorMsg = ref('')
+const showTooltipLogout = ref(false)
+const showTooltipNewNote = ref(false)
 
 async function onSignInSubmit(username, password) {
     try {
@@ -67,14 +70,40 @@ function onCancel() {
                     v-model="store.filter"
                 />
             </div>
-            <button class="logout-btn" @click="store.logout()">
-                <ArrowLeftStartOnRectangleIcon />
-                <!-- logout :::
+            <BaseTooltip
+                class="logout-btn"
+                placement="bottom"
+                :visible="showTooltipLogout"
+                content="Sign out"
+            >
+                <button
+                    class="logout-btn"
+                    @mouseenter="showTooltipLogout = true"
+                    @mouseleave="showTooltipLogout = false"
+                    @click="store.logout()"
+                >
+                    <ArrowLeftStartOnRectangleIcon />
+
+                    <!-- logout :::
                 <p class="logout">{{ store.username }}</p> -->
-            </button>
-            <button class="new-note-btn" @click="showNewNote = true">
-                <PencilSquareIcon />
-            </button>
+                </button>
+            </BaseTooltip>
+
+            <BaseTooltip
+                class="logout-btn"
+                placement="bottom"
+                :visible="showTooltipNewNote"
+                content="New note"
+            >
+                <button
+                    class="new-note-btn"
+                    @mouseenter="showTooltipNewNote = true"
+                    @mouseleave="showTooltipNewNote = false"
+                    @click="showNewNote = true"
+                >
+                    <PencilSquareIcon />
+                </button>
+            </BaseTooltip>
         </div>
         <div class="item links-container" v-else>
             <button class="sign-in-up-button" @click="showSignIn = true">
