@@ -7,6 +7,7 @@ export const useStore = defineStore('notes', () => {
     const username = ref('')
     const notes = ref([])
     let accessToken = ''
+    const filter = ref('')
 
     function isLoggedIn() {
         return username.value !== ''
@@ -93,6 +94,7 @@ export const useStore = defineStore('notes', () => {
     return {
         username,
         notes,
+        filter,
         isLoggedIn,
         logout,
         signIn,

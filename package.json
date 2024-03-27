@@ -10,6 +10,9 @@
         "preview": "vite preview"
     },
     "dependencies": {
+        "@floating-ui/dom": "^1.6.3",
+        "@heroicons/vue": "^2.1.1",
+        "@vue-hero-icons/outline": "^1.7.2",
         "axios": "^1.5.1",
         "dotenv": "^16.4.4",
         "pinia": "^2.1.7",

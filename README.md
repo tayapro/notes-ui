@@ -40,3 +40,10 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [x] After adding new note with missing title, UI does not show any newly added notes after that
 -   [x] UI does not respond to backend errors properly, e.g. when sign up existing user
 -   [x] Review dependencies in package.json
+
+## v0.0.4-alpha
+
+-   [x] Tooltip for buttons
+-   [x] Move Search field to header
+-   [x] Try redesign logout & new note buttons
+-   [x] Better layout for Signin/Signup modal buttons

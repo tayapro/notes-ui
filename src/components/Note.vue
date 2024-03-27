@@ -40,9 +40,11 @@ function getHumanTime(timeStamp) {
 
 <template>
     <div class="container">
-        <p class="note-updated-time">
-            {{ getHumanTime(props.note.updatedAt) }}
-        </p>
+        <div class="note-updated-time">
+            <p>
+                {{ getHumanTime(props.note.updatedAt) }}
+            </p>
+        </div>
         <div v-if="editMode">
             <div>
                 <input
@@ -60,22 +62,24 @@ function getHumanTime(timeStamp) {
                 />
             </div>
             <div class="note-buttons">
-                <button @click="onSave()">Save note</button>
-                <button @click="onCancel()">Cancel</button>
+                <button class="btns" @click="onSave()">Save note</button>
+                <button class="btns" @click="onCancel()">Cancel</button>
             </div>
         </div>
         <div class="note" v-else>
-            <HighlightText
-                :prop_text="props.note.title"
-                :prop_match="props.filter"
-            />
+            <h2>
+                <HighlightText
+                    :prop_text="props.note.title"
+                    :prop_match="props.filter"
+                />
+            </h2>
             <HighlightText
                 :prop_text="props.note.text"
                 :prop_match="props.filter"
             />
             <div class="note-buttons">
-                <button @click="onEdit()">Edit</button>
-                <button @click="onDelete()">Delete note</button>
+                <button class="btns" @click="onEdit()">Edit</button>
+                <button class="btns" @click="onDelete()">Delete note</button>
             </div>
         </div>
     </div>
@@ -86,7 +90,7 @@ function getHumanTime(timeStamp) {
     border: 1px solid rgba(51, 51, 52, 0.601);
     border-radius: 5px;
     padding: 10px;
-    width: 70%;
+    width: 100%;
     margin-top: 0.3rem;
     box-sizing: border-box;
     resize: none;
@@ -94,13 +98,13 @@ function getHumanTime(timeStamp) {
 
 .note-buttons {
     display: flex;
-    justify-content: left;
+    justify-content: end;
     align-items: center;
     gap: 0.5rem;
     margin-top: 0.8rem;
 }
 
-button {
+.btns {
     border-radius: 5px;
     border-color: rgba(36, 36, 255, 0.65);
     background-color: rgba(36, 36, 255, 0.65);
@@ -110,7 +114,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.btns:hover {
     background-color: rgba(31, 31, 220, 0.65);
     border: none;
     border-color: rgba(31, 31, 220, 0.65);
@@ -118,14 +122,14 @@ button:hover {
 
 .note-updated-time {
     font-size: 0.8rem;
-    margin: 0px;
-    padding: 0px;
-    margin-top: 5px;
-    margin-bottom: 5px;
+    display: flex;
+    justify-content: end;
 }
 
 .container {
-    padding-left: 10px;
-    padding-right: 10px;
+    padding: 1rem;
+    box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.25);
+    background-color: #dbe5de;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%2392ac9c' fill-opacity='0.96' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 </style>
