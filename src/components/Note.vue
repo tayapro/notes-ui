@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import HighlightText from './HighlightText.vue'
 import { useStore } from '../store/notesStore'
+import noteMiddleware from '../middleware/notes'
 
 const props = defineProps(['note', 'filter'])
 
@@ -12,10 +13,17 @@ const textInput = ref(null)
 const editMode = ref(false)
 
 async function onSave() {
-    await store.updateNote(props.note.id, {
+    const noteID = props.note.id
+    const res = await noteMiddleware.updateNote(noteID, {
         title: titleInput.value.value,
         text: textInput.value.value,
     })
+
+    for (let i = 0; i < store.notes.length; i++) {
+        if (store.notes[i].id === noteID) {
+            store.notes[i] = res.note
+        }
+    }
 
     editMode.value = false
 }
@@ -29,7 +37,9 @@ function onCancel() {
 }
 
 async function onDelete() {
-    await store.deleteNote(props.note.id)
+    const id = props.note.id
+    await noteMiddleware.deleteNote(id)
+    store.notes = store.notes.filter((data) => data.id !== id)
 }
 
 function getHumanTime(timeStamp) {
