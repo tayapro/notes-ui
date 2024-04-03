@@ -1,10 +1,33 @@
 <script setup>
+import { onMounted, watch } from 'vue'
+import { storeToRefs } from 'pinia'
 import { useStore } from './store/notesStore'
 import TheHeader from './components/TheHeader.vue'
 import TheFooter from './components/TheFooter.vue'
 import Note from './components/Note.vue'
+import noteMiddleware from './middleware/notes'
+import sessionMiddleware from './middleware/session'
 
 const store = useStore()
+const { isLoggedIn } = storeToRefs(store)
+
+watch(isLoggedIn, async () => {
+    if (store.isLoggedIn === false) {
+        return
+    }
+    console.log('Loading notes here')
+    const res = await noteMiddleware.listNotes()
+    store.notes = res.notes
+})
+
+onMounted(async () => {
+    console.log('hello')
+    const session = await sessionMiddleware.getCurrentSession()
+    if (session === null) {
+        return
+    }
+    store.isLoggedIn = true
+})
 
 function getFilteredNotes() {
     let filteredNotes = []

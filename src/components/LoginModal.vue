@@ -16,13 +16,19 @@ function onSubmit() {
     usernameRef.value.value = ''
     passwordRef.value.value = ''
 }
+
+function onCancel() {
+    emit('cancel')
+    usernameRef.value.value = ''
+    passwordRef.value.value = ''
+}
 </script>
 
 <template>
     <ModalBase :prop_visible="props.visible">
         <div class="modal">
             <div class="xmark-div">
-                <button class="xmark-btn" @click="emit('cancel')">
+                <button class="xmark-btn" @click="onCancel()">
                     <CloseIcn />
                 </button>
             </div>

@@ -1,5 +1,7 @@
 <script setup>
 import { useStore } from '../store/notesStore'
+import sessionMiddleware from '../middleware/session'
+import notesMiddleware from '../middleware/notes'
 import LoginModal from './LoginModal.vue'
 import NewNoteModal from './NewNoteModal.vue'
 import BaseTooltip from './lib/BaseTooltip.vue'
@@ -21,7 +23,8 @@ const showTooltipNewNote = ref(false)
 
 async function onSignInSubmit(username, password) {
     try {
-        await store.signIn(username, password)
+        await sessionMiddleware.login(username, password)
+        store.isLoggedIn = true
         showSignIn.value = false
         errorMsg.value = ''
     } catch (e) {
@@ -32,7 +35,8 @@ async function onSignInSubmit(username, password) {
 
 async function onSignUpSubmit(username, password) {
     try {
-        await store.signUp(username, password)
+        await sessionMiddleware.register(username, password)
+        store.isLoggedIn = true
         showSignUp.value = false
         errorMsg.value = ''
     } catch (e) {
@@ -43,17 +47,24 @@ async function onSignUpSubmit(username, password) {
 
 async function onAddNote(title, text, tags) {
     try {
-        await store.addNote({ title, text, tags })
+        const res = await notesMiddleware.addNote({ title, text, tags })
+        store.notes.push(res.note)
+        showNewNote.value = false
     } catch (e) {
         console.error(`ERROR: ${e}`)
     }
-    showNewNote.value = false
 }
 
 function onCancel() {
     showSignIn.value = false
     showSignUp.value = false
     errorMsg.value = ''
+}
+
+const onLogout = async () => {
+    await sessionMiddleware.logout()
+    store.notes = []
+    store.isLoggedIn = false
 }
 </script>
 
@@ -62,7 +73,7 @@ function onCancel() {
         <div class="item">
             <a class="logo" href="#">NOTES</a>
         </div>
-        <div class="item links-container" v-if="store.isLoggedIn()">
+        <div class="item links-container" v-if="store.isLoggedIn">
             <div class="search-container">
                 <input
                     class="search"
@@ -80,12 +91,9 @@ function onCancel() {
                     class="logout-btn"
                     @mouseenter="showTooltipLogout = true"
                     @mouseleave="showTooltipLogout = false"
-                    @click="store.logout()"
+                    @click="onLogout"
                 >
                     <ArrowLeftStartOnRectangleIcon />
-
-                    <!-- logout :::
-                <p class="logout">{{ store.username }}</p> -->
                 </button>
             </BaseTooltip>
 

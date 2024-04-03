@@ -21,6 +21,13 @@ function onSubmit() {
     tagsRef.value.value = ''
 }
 
+function onCancel() {
+    emit('cancel')
+    titleRef.value = ''
+    textRef.value = ''
+    tagsRef.value.value = ''
+}
+
 function isDisabled() {
     return titleRef.value.length === 0 || textRef.value.length === 0
 }
@@ -30,7 +37,7 @@ function isDisabled() {
     <ModalBase :prop_visible="props.visible">
         <div class="modal">
             <div class="xmark-div">
-                <button class="xmark-btn" @click="emit('cancel')">
+                <button class="xmark-btn" @click="onCancel()">
                     <CloseIcn />
                 </button>
             </div>
@@ -65,6 +72,10 @@ function isDisabled() {
     border: none;
     border-radius: 10px;
     cursor: pointer;
+}
+
+.submit-btn:disabled {
+    background-color: rgba(127, 124, 124, 0.5);
 }
 
 .xmark-div {
