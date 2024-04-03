@@ -47,3 +47,8 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [x] Move Search field to header
 -   [x] Try redesign logout & new note buttons
 -   [x] Better layout for Signin/Signup modal buttons
+
+## v0.0.5-alpha
+
+-   [x] Reset input values when modal windows closed
+-   [x] Remember login state between refreshes
