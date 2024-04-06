@@ -4,21 +4,28 @@ import HighlightText from './HighlightText.vue'
 import { useStore } from '../store/notesStore'
 import noteMiddleware from '../middleware/notes'
 
-const props = defineProps(['note', 'filter'])
+const props = defineProps(['note', 'filter', 'edit'])
 
 const store = useStore()
 
 const titleInput = ref(null)
 const textInput = ref(null)
-const editMode = ref(false)
+const editMode = ref(props.edit || false)
 
 async function onSave() {
     const noteID = props.note.id
-    const res = await noteMiddleware.updateNote(noteID, {
-        title: titleInput.value.value,
-        text: textInput.value.value,
-    })
-
+    let res = {}
+    if (noteID.startsWith('NEWNOTE_')) {
+        res = await noteMiddleware.addNote({
+            title: titleInput.value.value,
+            text: textInput.value.value,
+        })
+    } else {
+        res = await noteMiddleware.updateNote(noteID, {
+            title: titleInput.value.value,
+            text: textInput.value.value,
+        })
+    }
     for (let i = 0; i < store.notes.length; i++) {
         if (store.notes[i].id === noteID) {
             store.notes[i] = res.note
@@ -33,11 +40,16 @@ function onEdit() {
 }
 
 function onCancel() {
+    const id = props.note.id
+    if (id.startsWith('NEWNOTE_')) {
+        store.notes = store.notes.filter((data) => data.id !== id)
+    }
     editMode.value = false
 }
 
 async function onDelete() {
     const id = props.note.id
+
     await noteMiddleware.deleteNote(id)
     store.notes = store.notes.filter((data) => data.id !== id)
 }

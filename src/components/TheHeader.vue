@@ -1,22 +1,18 @@
 <script setup>
 import { useStore } from '../store/notesStore'
 import sessionMiddleware from '../middleware/session'
-import notesMiddleware from '../middleware/notes'
 import LoginModal from './LoginModal.vue'
-import NewNoteModal from './NewNoteModal.vue'
 import BaseTooltip from './lib/BaseTooltip.vue'
 
 import { ref } from 'vue'
 import {
     PencilSquareIcon,
-    UserCircleIcon,
     ArrowLeftStartOnRectangleIcon,
 } from '@heroicons/vue/24/solid'
 
 const store = useStore()
 const showSignIn = ref(false)
 const showSignUp = ref(false)
-const showNewNote = ref(false)
 const errorMsg = ref('')
 const showTooltipLogout = ref(false)
 const showTooltipNewNote = ref(false)
@@ -24,6 +20,7 @@ const showTooltipNewNote = ref(false)
 async function onSignInSubmit(username, password) {
     try {
         await sessionMiddleware.login(username, password)
+        showTooltipLogout.value = false
         store.isLoggedIn = true
         showSignIn.value = false
         errorMsg.value = ''
@@ -36,6 +33,7 @@ async function onSignInSubmit(username, password) {
 async function onSignUpSubmit(username, password) {
     try {
         await sessionMiddleware.register(username, password)
+        showTooltipLogout.value = false
         store.isLoggedIn = true
         showSignUp.value = false
         errorMsg.value = ''
@@ -45,14 +43,24 @@ async function onSignUpSubmit(username, password) {
     }
 }
 
-async function onAddNote(title, text, tags) {
-    try {
-        const res = await notesMiddleware.addNote({ title, text, tags })
-        store.notes.push(res.note)
-        showNewNote.value = false
-    } catch (e) {
-        console.error(`ERROR: ${e}`)
+function onAddNewNote() {
+    store.notes.push({
+        title: '',
+        text: '',
+        tag: [],
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        id: `NEWNOTE_${Math.random()}`,
+    })
+}
+
+function isNewNoteDisabled() {
+    for (let i = 0; i < store.notes.length; i++) {
+        if (store.notes[i].id.startsWith('NEWNOTE_')) {
+            return true
+        }
     }
+    return false
 }
 
 function onCancel() {
@@ -107,7 +115,8 @@ const onLogout = async () => {
                     class="new-note-btn"
                     @mouseenter="showTooltipNewNote = true"
                     @mouseleave="showTooltipNewNote = false"
-                    @click="showNewNote = true"
+                    @click="onAddNewNote()"
+                    :disabled="isNewNoteDisabled()"
                 >
                     <PencilSquareIcon />
                 </button>
@@ -137,13 +146,6 @@ const onLogout = async () => {
         @cancel="onCancel()"
         @submit="onSignUpSubmit"
         :errorMsg="errorMsg"
-    />
-
-    <NewNoteModal
-        greeting="Create a new note"
-        :visible="showNewNote"
-        @cancel="showNewNote = false"
-        @submit="onAddNote"
     />
 </template>
 
@@ -205,6 +207,10 @@ const onLogout = async () => {
     width: 1.7rem;
     height: 1.7rem;
     margin-right: 1rem;
+}
+
+.new-note-btn:disabled {
+    color: rgba(124, 124, 124, 0.802);
 }
 
 .logout-btn {

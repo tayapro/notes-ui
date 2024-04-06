@@ -1,5 +1,5 @@
 <script setup>
-import { onMounted, watch } from 'vue'
+import { onMounted, watch, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useStore } from './store/notesStore'
 import TheHeader from './components/TheHeader.vue'
@@ -21,7 +21,6 @@ watch(isLoggedIn, async () => {
 })
 
 onMounted(async () => {
-    console.log('hello')
     const session = await sessionMiddleware.getCurrentSession()
     if (session === null) {
         return
@@ -32,6 +31,7 @@ onMounted(async () => {
 function getFilteredNotes() {
     let filteredNotes = []
     for (let note of store.notes) {
+        // console.log(note)
         if (
             note.title.includes(store.filter) ||
             note.text.includes(store.filter)
@@ -50,7 +50,11 @@ function getFilteredNotes() {
         <TheHeader />
         <div class="content-container">
             <div v-for="(item, index) in getFilteredNotes()" :key="item.id">
-                <Note :note="item" :filter="store.filter" />
+                <Note
+                    :note="item"
+                    :filter="store.filter"
+                    :edit="item.id.startsWith('NEWNOTE_')"
+                />
             </div>
         </div>
         <TheFooter />
