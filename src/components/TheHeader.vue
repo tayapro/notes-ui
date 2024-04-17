@@ -79,7 +79,7 @@ const onLogout = async () => {
 <template>
     <div class="header-container">
         <div class="item">
-            <a class="logo" href="#">NOTES</a>
+            <img class="logo-picture" src="../assets/TheNotesLogo.png" />
         </div>
         <div class="item links-container" v-if="store.isLoggedIn">
             <div class="search-container">
@@ -106,7 +106,7 @@ const onLogout = async () => {
             </BaseTooltip>
 
             <BaseTooltip
-                class="logout-btn"
+                class="new-note-btn"
                 placement="bottom"
                 :visible="showTooltipNewNote"
                 content="New note"
@@ -150,6 +150,11 @@ const onLogout = async () => {
 </template>
 
 <style scoped>
+.logo-picture {
+    height: 6rem;
+    margin-left: 0.5rem;
+}
+
 .search {
     color: rgb(51, 51, 52);
     border: 1px solid rgba(51, 51, 52, 0.601);
@@ -163,13 +168,11 @@ const onLogout = async () => {
 }
 
 .header-container {
-    background-color: rgb(231, 231, 231);
     width: 100%;
     z-index: 10;
     align-items: center;
     display: flex;
     padding-top: 10px;
-    padding-bottom: 10px;
     overflow: hidden;
 }
 
@@ -202,10 +205,11 @@ const onLogout = async () => {
     justify-content: center;
     cursor: pointer;
     border: none;
-    background-color: rgb(231, 231, 231);
-    color: rgba(51, 51, 52, 0.802);
-    width: 1.7rem;
-    height: 1.7rem;
+    /* background-color: rgb(231, 231, 231); */
+    background-color: white;
+    color: rgba(51, 51, 51, 0.9);
+    width: 2rem;
+    height: 2rem;
     margin-right: 1rem;
 }
 
