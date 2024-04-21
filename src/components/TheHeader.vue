@@ -1,5 +1,6 @@
 <script setup>
 import { useStore } from '../store/notesStore'
+import { useRouter } from 'vue-router'
 import sessionMiddleware from '../middleware/session'
 import LoginModal from './LoginModal.vue'
 import BaseTooltip from './lib/BaseTooltip.vue'
@@ -11,9 +12,11 @@ import {
 } from '@heroicons/vue/24/solid'
 
 const store = useStore()
+const router = useRouter()
+
+const errorMsg = ref('')
 const showSignIn = ref(false)
 const showSignUp = ref(false)
-const errorMsg = ref('')
 const showTooltipLogout = ref(false)
 const showTooltipNewNote = ref(false)
 
@@ -73,6 +76,7 @@ const onLogout = async () => {
     await sessionMiddleware.logout()
     store.notes = []
     store.isLoggedIn = false
+    router.push('/')
 }
 </script>
 
@@ -89,6 +93,7 @@ const onLogout = async () => {
                     v-model="store.filter"
                 />
             </div>
+
             <BaseTooltip
                 class="logout-btn"
                 placement="bottom"
@@ -118,7 +123,7 @@ const onLogout = async () => {
                     @click="onAddNewNote()"
                     :disabled="isNewNoteDisabled()"
                 >
-                    <PencilSquareIcon />
+                    <PencilSquareIcon class="icn" />
                 </button>
             </BaseTooltip>
         </div>
@@ -206,7 +211,7 @@ const onLogout = async () => {
     cursor: pointer;
     border: none;
     /* background-color: rgb(231, 231, 231); */
-    background-color: white;
+    /* background-color: white; */
     color: rgba(51, 51, 51, 0.9);
     width: 2rem;
     height: 2rem;

@@ -36,8 +36,9 @@
                     </a>
                 </div>
                 <div class="links">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
+                    <RouterLink to="/">Home</RouterLink>
+                    <RouterLink to="/notes">Notes</RouterLink>
+                    <RouterLink to="/about">About</RouterLink>
                 </div>
             </div>
             <div class="all-rights">
@@ -108,7 +109,6 @@ a:hover {
 }
 
 footer {
-    /* background-color: rgb(231, 231, 231); */
     z-index: 10;
     width: 100%;
     font-size: 0.8rem;

@@ -1,3 +1,23 @@
+<script setup>
+import { onMounted } from 'vue'
+import { useRouter } from 'vue-router'
+import sessionMiddleware from '../middleware/session'
+
+const router = useRouter()
+
+function onGetStarted() {
+    router.push('/notes')
+}
+
+onMounted(async () => {
+    const session = await sessionMiddleware.getCurrentSession()
+    if (session === null) {
+        return
+    }
+    router.push('/notes')
+})
+</script>
+
 <template>
     <div class="main-container">
         <div class="header-container">
@@ -18,7 +38,12 @@
                         </div>
                     </div>
                     <div class="get-started">
-                        <button class="get-started-button">Get started</button>
+                        <button
+                            class="get-started-button"
+                            @click="onGetStarted()"
+                        >
+                            Get started
+                        </button>
                     </div>
                 </div>
                 <div class="landing-girl-with-ideas">
