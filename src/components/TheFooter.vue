@@ -67,7 +67,6 @@
 }
 
 svg {
-    /* color: rgb(81, 79, 79); */
     color: rgb(255, 255, 255);
 }
 
@@ -87,7 +86,6 @@ svg {
 .links a {
     padding-left: 10px;
     text-decoration: none;
-    /* color: rgb(0, 0, 0); */
     color: rgb(255, 255, 255);
 }
 

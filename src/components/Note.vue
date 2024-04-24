@@ -73,6 +73,7 @@ function getHumanTime(timeStamp) {
                     class="edit-note"
                     ref="titleInput"
                     :value="props.note.title"
+                    placeholder="add title"
                 />
             </div>
             <div>
@@ -81,6 +82,7 @@ function getHumanTime(timeStamp) {
                     ref="textInput"
                     rows="10"
                     :value="props.note.text"
+                    placeholder="add text"
                 />
             </div>
             <div class="note-buttons">

@@ -24,7 +24,7 @@ onMounted(async () => {
             <img class="logo-picture" src="../assets/TheNotesLogo.png" />
         </div>
         <div class="content-container">
-            <div class="bla">
+            <div class="box">
                 <div class="landing-slogan-container">
                     <div class="slogan">
                         <div>
@@ -47,7 +47,7 @@ onMounted(async () => {
                     </div>
                 </div>
                 <div class="landing-girl-with-ideas">
-                    <img src="../assets/girl with ideas.png" />
+                    <img src="../assets/GirlWithIdeas.png" />
                 </div>
             </div>
         </div>
@@ -58,10 +58,8 @@ onMounted(async () => {
 .get-started {
     padding-left: 5rem;
 }
+
 .get-started-button {
-    /* background-color: rgb(231, 231, 231);
-    color: rgb(51, 51, 51);
-    border: 2px solid rgba(51, 51, 52, 0.601); */
     background-color: rgb(51, 51, 51);
     color: rgb(231, 231, 231);
     border: 2px solid rgba(231, 231, 231, 0.601);
@@ -91,8 +89,7 @@ onMounted(async () => {
     flex-direction: column;
 }
 
-.bla {
-    /* border: 2px solid yellow; */
+.box {
     display: flex;
     justify-content: space-around;
     width: 100%;
@@ -100,7 +97,6 @@ onMounted(async () => {
 }
 
 .landing-slogan-container {
-    /* border: 1px solid black; */
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -108,7 +104,6 @@ onMounted(async () => {
 }
 
 .landing-girl-with-ideas {
-    /* border: 1px solid red; */
     height: 20rem;
     padding-right: 4rem;
 }
@@ -123,6 +118,7 @@ onMounted(async () => {
     align-items: left;
     display: flex;
     overflow: hidden;
+    padding-top: 0.5rem;
 }
 
 .logo-picture {

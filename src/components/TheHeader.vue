@@ -177,7 +177,7 @@ const onLogout = async () => {
     z-index: 10;
     align-items: center;
     display: flex;
-    padding-top: 10px;
+    padding-top: 0.5rem;
     overflow: hidden;
 }
 
@@ -194,12 +194,17 @@ const onLogout = async () => {
 }
 
 .sign-in-up-button {
-    background-color: rgb(231, 231, 231);
-    padding: 0.6rem 0.7rem;
+    background-color: rgb(51, 51, 51);
+    color: rgb(231, 231, 231);
+    border: 2px solid rgba(231, 231, 231, 0.601);
+    padding: 0.8rem 1.4rem;
     text-decoration: none;
-    color: rgb(51, 51, 52);
-    border: 2px solid rgba(51, 51, 52, 0.601);
     border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.sign-in-up-button:hover {
+    background-color: rgba(51, 51, 51, 0.8);
 }
 
 .logout-btn,
@@ -210,12 +215,11 @@ const onLogout = async () => {
     justify-content: center;
     cursor: pointer;
     border: none;
-    /* background-color: rgb(231, 231, 231); */
-    /* background-color: white; */
     color: rgba(51, 51, 51, 0.9);
     width: 2rem;
     height: 2rem;
     margin-right: 1rem;
+    background-color: transparent;
 }
 
 .new-note-btn:disabled {
@@ -226,16 +230,12 @@ const onLogout = async () => {
     margin-left: 1rem;
 }
 
-.sign-in-up-button:hover {
-    background-color: rgb(212, 225, 225);
-}
-
 .links-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 0.5rem;
-    gap: 5px;
+    padding-right: 2rem;
+    gap: 1.5rem;
 }
 
 p {
