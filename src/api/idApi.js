@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const myAxios = axios.create({
-    baseURL: `${import.meta.env.VITE_BASE_ID_URL}/api`,
+    baseURL: `${import.meta.env.VITE_BASE_ID_URL}/api/id`,
 })
 
 async function login(username, password) {
