@@ -60,3 +60,4 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [x] Add router for landing page, about page and notes page
 -   [x] Fix tooltip positioning bug
 -   [x] Replace modal by card for new note
+-   [x] Create Dockerfile
