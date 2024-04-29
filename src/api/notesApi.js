@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const myAxios = axios.create({
-    baseURL: `${import.meta.env.VITE_BASE_BE_URL}`,
+    baseURL: `${import.meta.env.VITE_BASE_BE_URL}/api/backend`,
 })
 
 async function addNote(accessToken, addData) {

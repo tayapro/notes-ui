@@ -52,3 +52,14 @@ VITE_BASE_BE_URL="http://localhost:3000"
 
 -   [x] Reset input values when modal windows closed
 -   [x] Remember login state between refreshes
+
+## v0.0.6-alpha
+
+-   [x] Design about page
+-   [x] Design landing page
+-   [x] Add router for landing page, about page and notes page
+-   [x] Fix tooltip positioning bug
+-   [x] Replace modal by card for new note
+-   [x] Create Dockerfile
+-   [x] Docker UI support
+-   [x] Add caddy reverse-proxy

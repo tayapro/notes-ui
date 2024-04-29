@@ -36,8 +36,9 @@
                     </a>
                 </div>
                 <div class="links">
-                    <a href="#">Home</a>
-                    <a href="#">About</a>
+                    <RouterLink to="/">Home</RouterLink>
+                    <RouterLink to="/notes">Notes</RouterLink>
+                    <RouterLink to="/about">About</RouterLink>
                 </div>
             </div>
             <div class="all-rights">
@@ -58,6 +59,7 @@
 
 .separator-text {
     border-top: 1px solid rgb(207, 218, 218);
+    color: rgb(255, 255, 255);
     padding-top: 5px;
 }
 .container {
@@ -65,7 +67,7 @@
 }
 
 svg {
-    color: rgb(81, 79, 79);
+    color: rgb(255, 255, 255);
 }
 
 .icons-and-links {
@@ -84,7 +86,7 @@ svg {
 .links a {
     padding-left: 10px;
     text-decoration: none;
-    color: rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }
 
 a:hover {
@@ -105,7 +107,6 @@ a:hover {
 }
 
 footer {
-    background-color: rgb(231, 231, 231);
     z-index: 10;
     width: 100%;
     font-size: 0.8rem;

@@ -4,21 +4,28 @@ import HighlightText from './HighlightText.vue'
 import { useStore } from '../store/notesStore'
 import noteMiddleware from '../middleware/notes'
 
-const props = defineProps(['note', 'filter'])
+const props = defineProps(['note', 'filter', 'edit'])
 
 const store = useStore()
 
 const titleInput = ref(null)
 const textInput = ref(null)
-const editMode = ref(false)
+const editMode = ref(props.edit || false)
 
 async function onSave() {
     const noteID = props.note.id
-    const res = await noteMiddleware.updateNote(noteID, {
-        title: titleInput.value.value,
-        text: textInput.value.value,
-    })
-
+    let res = {}
+    if (noteID.startsWith('NEWNOTE_')) {
+        res = await noteMiddleware.addNote({
+            title: titleInput.value.value,
+            text: textInput.value.value,
+        })
+    } else {
+        res = await noteMiddleware.updateNote(noteID, {
+            title: titleInput.value.value,
+            text: textInput.value.value,
+        })
+    }
     for (let i = 0; i < store.notes.length; i++) {
         if (store.notes[i].id === noteID) {
             store.notes[i] = res.note
@@ -33,11 +40,16 @@ function onEdit() {
 }
 
 function onCancel() {
+    const id = props.note.id
+    if (id.startsWith('NEWNOTE_')) {
+        store.notes = store.notes.filter((data) => data.id !== id)
+    }
     editMode.value = false
 }
 
 async function onDelete() {
     const id = props.note.id
+
     await noteMiddleware.deleteNote(id)
     store.notes = store.notes.filter((data) => data.id !== id)
 }
@@ -61,6 +73,7 @@ function getHumanTime(timeStamp) {
                     class="edit-note"
                     ref="titleInput"
                     :value="props.note.title"
+                    placeholder="add title"
                 />
             </div>
             <div>
@@ -69,6 +82,7 @@ function getHumanTime(timeStamp) {
                     ref="textInput"
                     rows="10"
                     :value="props.note.text"
+                    placeholder="add text"
                 />
             </div>
             <div class="note-buttons">
@@ -139,7 +153,7 @@ function getHumanTime(timeStamp) {
 .container {
     padding: 1rem;
     box-shadow: 3px 3px 0px 0px rgba(0, 0, 0, 0.25);
-    background-color: #dbe5de;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%2392ac9c' fill-opacity='0.96' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
+    background-color: #e2e2e2;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='4' height='4' viewBox='0 0 4 4'%3E%3Cpath fill='%2392ac9c' fill-opacity='0.46' d='M1 3h1v1H1V3zm2-2h1v1H3V1z'%3E%3C/path%3E%3C/svg%3E");
 }
 </style>

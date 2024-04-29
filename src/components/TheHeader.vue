@@ -1,29 +1,29 @@
 <script setup>
 import { useStore } from '../store/notesStore'
+import { useRouter } from 'vue-router'
 import sessionMiddleware from '../middleware/session'
-import notesMiddleware from '../middleware/notes'
 import LoginModal from './LoginModal.vue'
-import NewNoteModal from './NewNoteModal.vue'
 import BaseTooltip from './lib/BaseTooltip.vue'
 
 import { ref } from 'vue'
 import {
     PencilSquareIcon,
-    UserCircleIcon,
     ArrowLeftStartOnRectangleIcon,
 } from '@heroicons/vue/24/solid'
 
 const store = useStore()
+const router = useRouter()
+
+const errorMsg = ref('')
 const showSignIn = ref(false)
 const showSignUp = ref(false)
-const showNewNote = ref(false)
-const errorMsg = ref('')
 const showTooltipLogout = ref(false)
 const showTooltipNewNote = ref(false)
 
 async function onSignInSubmit(username, password) {
     try {
         await sessionMiddleware.login(username, password)
+        showTooltipLogout.value = false
         store.isLoggedIn = true
         showSignIn.value = false
         errorMsg.value = ''
@@ -36,6 +36,7 @@ async function onSignInSubmit(username, password) {
 async function onSignUpSubmit(username, password) {
     try {
         await sessionMiddleware.register(username, password)
+        showTooltipLogout.value = false
         store.isLoggedIn = true
         showSignUp.value = false
         errorMsg.value = ''
@@ -45,14 +46,24 @@ async function onSignUpSubmit(username, password) {
     }
 }
 
-async function onAddNote(title, text, tags) {
-    try {
-        const res = await notesMiddleware.addNote({ title, text, tags })
-        store.notes.push(res.note)
-        showNewNote.value = false
-    } catch (e) {
-        console.error(`ERROR: ${e}`)
+function onAddNewNote() {
+    store.notes.push({
+        title: '',
+        text: '',
+        tag: [],
+        createdAt: Date.now(),
+        updatedAt: Date.now(),
+        id: `NEWNOTE_${Math.random()}`,
+    })
+}
+
+function isNewNoteDisabled() {
+    for (let i = 0; i < store.notes.length; i++) {
+        if (store.notes[i].id.startsWith('NEWNOTE_')) {
+            return true
+        }
     }
+    return false
 }
 
 function onCancel() {
@@ -65,13 +76,14 @@ const onLogout = async () => {
     await sessionMiddleware.logout()
     store.notes = []
     store.isLoggedIn = false
+    router.push('/')
 }
 </script>
 
 <template>
     <div class="header-container">
         <div class="item">
-            <a class="logo" href="#">NOTES</a>
+            <img class="logo-picture" src="../assets/TheNotesLogo.png" />
         </div>
         <div class="item links-container" v-if="store.isLoggedIn">
             <div class="search-container">
@@ -81,6 +93,7 @@ const onLogout = async () => {
                     v-model="store.filter"
                 />
             </div>
+
             <BaseTooltip
                 class="logout-btn"
                 placement="bottom"
@@ -98,7 +111,7 @@ const onLogout = async () => {
             </BaseTooltip>
 
             <BaseTooltip
-                class="logout-btn"
+                class="new-note-btn"
                 placement="bottom"
                 :visible="showTooltipNewNote"
                 content="New note"
@@ -107,9 +120,10 @@ const onLogout = async () => {
                     class="new-note-btn"
                     @mouseenter="showTooltipNewNote = true"
                     @mouseleave="showTooltipNewNote = false"
-                    @click="showNewNote = true"
+                    @click="onAddNewNote()"
+                    :disabled="isNewNoteDisabled()"
                 >
-                    <PencilSquareIcon />
+                    <PencilSquareIcon class="icn" />
                 </button>
             </BaseTooltip>
         </div>
@@ -138,16 +152,14 @@ const onLogout = async () => {
         @submit="onSignUpSubmit"
         :errorMsg="errorMsg"
     />
-
-    <NewNoteModal
-        greeting="Create a new note"
-        :visible="showNewNote"
-        @cancel="showNewNote = false"
-        @submit="onAddNote"
-    />
 </template>
 
 <style scoped>
+.logo-picture {
+    height: 6rem;
+    margin-left: 0.5rem;
+}
+
 .search {
     color: rgb(51, 51, 52);
     border: 1px solid rgba(51, 51, 52, 0.601);
@@ -161,13 +173,11 @@ const onLogout = async () => {
 }
 
 .header-container {
-    background-color: rgb(231, 231, 231);
     width: 100%;
     z-index: 10;
     align-items: center;
     display: flex;
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding-top: 0.5rem;
     overflow: hidden;
 }
 
@@ -184,12 +194,17 @@ const onLogout = async () => {
 }
 
 .sign-in-up-button {
-    background-color: rgb(231, 231, 231);
-    padding: 0.6rem 0.7rem;
+    background-color: rgb(51, 51, 51);
+    color: rgb(231, 231, 231);
+    border: 2px solid rgba(231, 231, 231, 0.601);
+    padding: 0.8rem 1.4rem;
     text-decoration: none;
-    color: rgb(51, 51, 52);
-    border: 2px solid rgba(51, 51, 52, 0.601);
     border-radius: 5px;
+    font-size: 0.9rem;
+}
+
+.sign-in-up-button:hover {
+    background-color: rgba(51, 51, 51, 0.8);
 }
 
 .logout-btn,
@@ -200,27 +215,27 @@ const onLogout = async () => {
     justify-content: center;
     cursor: pointer;
     border: none;
-    background-color: rgb(231, 231, 231);
-    color: rgba(51, 51, 52, 0.802);
-    width: 1.7rem;
-    height: 1.7rem;
+    color: rgba(51, 51, 51, 0.9);
+    width: 2rem;
+    height: 2rem;
     margin-right: 1rem;
+    background-color: transparent;
+}
+
+.new-note-btn:disabled {
+    color: rgba(124, 124, 124, 0.802);
 }
 
 .logout-btn {
     margin-left: 1rem;
 }
 
-.sign-in-up-button:hover {
-    background-color: rgb(212, 225, 225);
-}
-
 .links-container {
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    padding-right: 0.5rem;
-    gap: 5px;
+    padding-right: 2rem;
+    gap: 1.5rem;
 }
 
 p {
