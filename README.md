@@ -61,3 +61,5 @@ VITE_BASE_BE_URL="http://localhost:3000"
 -   [x] Fix tooltip positioning bug
 -   [x] Replace modal by card for new note
 -   [x] Create Dockerfile
+-   [x] Docker UI support
+-   [x] Add caddy reverse-proxy
